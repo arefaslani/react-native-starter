@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  TouchableHighlight
+  TouchableOpacity
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -18,12 +18,12 @@ export default class Card extends Component {
   render() {
     const {image, caption} = this.props;
     return (
-      <TouchableHighlight onPress={this.navigateHandler}>
+      <TouchableOpacity onPress={this.navigateHandler}>
         <View>
           <Image source={image} style={styles.image} />
           <Text style={styles.caption}>{caption}</Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }
