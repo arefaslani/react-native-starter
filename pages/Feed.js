@@ -52,7 +52,7 @@ export default class App extends React.Component {
           }
         ]}
         renderItem={({item}) => (
-          <Card image={item.image} caption={item.caption} />
+          <Card image={item.image} caption={item.caption} navigation={this.props.navigation} />
         )}
       />
     );

@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableHighlight
+} from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 export default class Card extends Component {
+  navigateHandler = () => {
+    this.props.navigation.navigate('Post', this.props)
+  }
+
   render() {
     const {image, caption} = this.props;
     return (
-      <View>
-        <Image source={image} style={styles.image} />
-        <Text style={styles.caption}>{caption}</Text>
-      </View>
+      <TouchableHighlight onPress={this.navigateHandler}>
+        <View>
+          <Image source={image} style={styles.image} />
+          <Text style={styles.caption}>{caption}</Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 }
