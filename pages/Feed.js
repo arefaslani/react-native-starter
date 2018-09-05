@@ -1,15 +1,15 @@
 import React from "react";
 import { FlatList } from "react-native";
 
-import Card from "../components/Card";
+import Card from "components/Card";
 
 const images = [
-  require("../images/1.jpg"),
-  require("../images/2.jpg"),
-  require("../images/3.jpg"),
-  require("../images/4.jpg"),
-  require("../images/5.jpg"),
-  require("../images/6.jpg"),
+  require("assets/images/1.jpg"),
+  require("assets/images/2.jpg"),
+  require("assets/images/3.jpg"),
+  require("assets/images/4.jpg"),
+  require("assets/images/5.jpg"),
+  require("assets/images/6.jpg"),
 ]
 
 export default class App extends React.Component {

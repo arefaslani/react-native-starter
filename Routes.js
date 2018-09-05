@@ -5,9 +5,9 @@ import {
 } from "react-navigation";
 import Icon from "@expo/vector-icons/FontAwesome";
 
-import FeedPage from './pages/Feed'
-import PostPage from './pages/Post'
-import SettingsPage from './pages/Settings'
+import FeedPage from 'pages/Feed'
+import PostPage from 'pages/Post'
+import SettingsPage from 'pages/Settings'
 
 const soundObject = new Expo.Audio.Sound();
 
@@ -59,7 +59,7 @@ export default createBottomTabNavigator({
   navigationOptions: {
     tabBarOnPress: async ({ navigation, defaultHandler }) => {
       try {
-        await soundObject.loadAsync(require("./sounds/tab.m4a"));
+        await soundObject.loadAsync(require("assets/sounds/tab.m4a"));
       } catch (error) {
         // do nothing
       }
