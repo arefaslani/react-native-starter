@@ -9,6 +9,8 @@ import FeedPage from './pages/Feed'
 import PostPage from './pages/Post'
 import SettingsPage from './pages/Settings'
 
+const soundObject = new Expo.Audio.Sound();
+
 const FeedStack = createStackNavigator({
   Feed: {
     screen: FeedPage,
@@ -33,25 +35,36 @@ const SettingsStack = createStackNavigator({
   }
 });
 
-export default createBottomTabNavigator(
-  {
-    Feed: {
-      screen: FeedStack,
-      navigationOptions: {
-        title: "خانه",
-        tabBarIcon: ({ focused, tintColor }) => {
-          return <Icon name="home" size={25} color={tintColor} />;
-        }
+export default createBottomTabNavigator({
+  Feed: {
+    screen: FeedStack,
+    navigationOptions: {
+      title: "خانه",
+      tabBarIcon: ({ focused, tintColor }) => {
+        return <Icon name="home" size={25} color={tintColor} />;
       }
-    },
-    Settings: {
-      screen: SettingsStack,
-      navigationOptions: {
-        title: "تنظیمات",
-        tabBarIcon: ({ focused, tintColor }) => {
-          return <Icon name="sliders" size={25} color={tintColor} />;
-        }
+    }
+  },
+  Settings: {
+    screen: SettingsStack,
+    navigationOptions: {
+      title: "تنظیمات",
+      tabBarIcon: ({ focused, tintColor }) => {
+        return <Icon name="sliders" size={25} color={tintColor} />;
       }
     }
   }
-);
+},
+{
+  navigationOptions: {
+    tabBarOnPress: async ({ navigation, defaultHandler }) => {
+      try {
+        await soundObject.loadAsync(require("./sounds/tab.m4a"));
+      } catch (error) {
+        // do nothing
+      }
+      await soundObject.replayAsync();
+      defaultHandler()
+    }
+  }
+});
