@@ -18,13 +18,14 @@ const FeedStack = createStackNavigator({
   Feed: {
     screen: FeedPage,
     navigationOptions: {
-      title: "خانه"
+      title: "Home"
     }
   },
   Post: {
     screen: PostPage,
-    navigationOptions: {
-      title: "پست"
+    navigationOptions: ({ navigation }) => {
+      console.log(navigation.state);
+      return { title: navigation.state.params.author };
     }
   }
 });
@@ -33,7 +34,7 @@ const SettingsStack = createStackNavigator({
   Settings: {
     screen: SettingsPage,
     navigationOptions: {
-      title: "تنظیمات"
+      title: "Settings"
     }
   }
 });
@@ -50,14 +51,14 @@ const Routes = createBottomTabNavigator(
     Feed: {
       screen: FeedStack,
       navigationOptions: {
-        title: "خانه",
+        title: "Home",
         tabBarIcon: HomeTabIcon
       }
     },
     Settings: {
       screen: SettingsStack,
       navigationOptions: {
-        title: "تنظیمات",
+        title: "Settings",
         tabBarIcon: SettingsTabIcon
       }
     }

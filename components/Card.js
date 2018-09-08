@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   image: {
@@ -17,9 +17,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     width: width - 20,
+    height: height / 2,
     marginBottom: 10
   },
-  caption: {
+  author: {
     marginBottom: 10,
     paddingLeft: 10,
     paddingRight: 10
@@ -33,12 +34,16 @@ export default class Card extends Component {
   };
 
   render() {
-    const { image, caption } = this.props;
+    const { imageId, author } = this.props;
+    console.log(`https://picsum.photos/200/300?${imageId}`);
     return (
       <TouchableOpacity onPress={this.navigateHandler}>
         <View>
-          <Image source={image} style={styles.image} />
-          <Text style={styles.caption}>{caption}</Text>
+          <Image
+            source={{ uri: `https://picsum.photos/200/300?${imageId}` }}
+            style={styles.image}
+          />
+          <Text style={styles.author}>{author}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -48,6 +53,6 @@ export default class Card extends Component {
 Card.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
-  image: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired
+  imageId: PropTypes.number.isRequired,
+  author: PropTypes.string.isRequired
 };
