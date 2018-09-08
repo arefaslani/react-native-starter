@@ -35,7 +35,6 @@ export default class Card extends Component {
 
   render() {
     const { imageId, author } = this.props;
-    console.log(`https://picsum.photos/200/300?${imageId}`);
     return (
       <TouchableOpacity onPress={this.navigateHandler}>
         <View>

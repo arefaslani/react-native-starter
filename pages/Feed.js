@@ -15,15 +15,12 @@ class Feed extends React.Component {
     fetchAllPosts();
   }
 
-  keyExtractor = item => item.id.toString();
-
   render() {
     const { per, page } = this.state;
-    console.log("LOG:", page);
     const { navigation, posts } = this.props;
     return (
       <FlatList
-        keyExtractor={this.keyExtractor}
+        keyExtractor={item => item.id.toString()}
         data={posts.slice(0, (page - 1) * per + per)}
         onEndReached={() => {
           this.setState({ page: page + 1 });

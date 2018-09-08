@@ -23,10 +23,9 @@ const FeedStack = createStackNavigator({
   },
   Post: {
     screen: PostPage,
-    navigationOptions: ({ navigation }) => {
-      console.log(navigation.state);
-      return { title: navigation.state.params.author };
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.author
+    })
   }
 });
 
