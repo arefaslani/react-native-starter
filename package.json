@@ -11,7 +11,9 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
+    "husky": "^0.14.3",
     "jest-expo": "~27.0.0",
+    "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "react-native-scripts": "1.14.0",
     "react-test-renderer": "16.3.1"
@@ -24,7 +26,14 @@
     "ios": "react-native-scripts ios",
     "test": "jest",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "preset": "jest-expo"
