@@ -1,9 +1,9 @@
-function* testSaga() {
-  console.log('Root Saga')
-}
-
 import { all } from "redux-saga/effects";
 
-export default function* rootSaga(services = {}) {
+function* testSaga() {
+  yield console.log("Root Saga");
+}
+
+export default function* rootSaga() {
   yield all([testSaga()]);
 }

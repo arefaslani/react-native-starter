@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   View,
   Text,
@@ -6,27 +7,9 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity
-} from 'react-native';
+} from "react-native";
 
-const { width, height } = Dimensions.get('window');
-
-export default class Card extends Component {
-  navigateHandler = () => {
-    this.props.navigation.navigate('Post', this.props)
-  }
-
-  render() {
-    const {image, caption} = this.props;
-    return (
-      <TouchableOpacity onPress={this.navigateHandler}>
-        <View>
-          <Image source={image} style={styles.image} />
-          <Text style={styles.caption}>{caption}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   image: {
@@ -41,4 +24,30 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   }
-})
+});
+
+export default class Card extends Component {
+  navigateHandler = () => {
+    const { navigation } = this.props;
+    navigation.navigate("Post", this.props);
+  };
+
+  render() {
+    const { image, caption } = this.props;
+    return (
+      <TouchableOpacity onPress={this.navigateHandler}>
+        <View>
+          <Image source={image} style={styles.image} />
+          <Text style={styles.caption}>{caption}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
+
+Card.propTypes = {
+  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
+    .isRequired,
+  image: PropTypes.string.isRequired,
+  caption: PropTypes.string.isRequired
+};

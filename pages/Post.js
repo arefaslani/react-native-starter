@@ -1,19 +1,8 @@
-import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import React from "react";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import PropTypes from "prop-types";
 
-const { width, height } = Dimensions.get('window');
-
-export default class Post extends Component {
-  render() {
-    const { image, caption } = this.props.navigation.state.params
-    return (
-      <View>
-        <Image source={image} style={styles.image} />
-        <Text style={styles.caption}>{caption}</Text>
-      </View>
-    )
-  }
-}
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   image: {
@@ -29,3 +18,21 @@ const styles = StyleSheet.create({
     paddingRight: 10
   }
 });
+
+const Post = props => {
+  const { navigation } = props;
+  const { image, caption } = navigation.state.params;
+  return (
+    <View>
+      <Image source={image} style={styles.image} />
+      <Text style={styles.caption}>{caption}</Text>
+    </View>
+  );
+};
+
+Post.propTypes = {
+  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
+    .isRequired
+};
+
+export default Post;
