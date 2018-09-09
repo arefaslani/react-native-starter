@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {
   createBottomTabNavigator,
@@ -10,15 +10,29 @@ import FeedPage from "pages/Feed";
 import PostPage from "pages/Post";
 import SettingsPage from "pages/Settings";
 
+const mapNavigationStateParamsToProps = SomeComponent =>
+  class extends Component {
+    static navigationOptions = SomeComponent.navigationOptions;
+
+    render() {
+      const {
+        navigation: {
+          state: { params }
+        }
+      } = this.props;
+      return <SomeComponent {...params} {...this.props} />;
+    }
+  };
+
 const FeedStack = createStackNavigator({
   Feed: {
-    screen: FeedPage,
+    screen: mapNavigationStateParamsToProps(FeedPage),
     navigationOptions: {
       title: "Home"
     }
   },
   Post: {
-    screen: PostPage,
+    screen: mapNavigationStateParamsToProps(PostPage),
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.author
     })
@@ -27,7 +41,7 @@ const FeedStack = createStackNavigator({
 
 const SettingsStack = createStackNavigator({
   Settings: {
-    screen: SettingsPage,
+    screen: mapNavigationStateParamsToProps(SettingsPage),
     navigationOptions: {
       title: "Settings"
     }
