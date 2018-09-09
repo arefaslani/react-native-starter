@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     width: width - 20,
-    height: height / 2,
     marginBottom: 10
   },
   author: {
@@ -28,19 +27,40 @@ const styles = StyleSheet.create({
 });
 
 export default class Card extends Component {
+  state = { imageHeight: height / 2 };
+
+  componentWillMount() {
+    const { imageId } = this.props;
+    const uri = this.imageURI(imageId);
+    Image.getSize(uri, (w, h) => {
+      const ratio = width / w;
+      this.setState({ imageHeight: h * ratio });
+    });
+  }
+
   navigateHandler = () => {
-    const { navigation } = this.props;
-    navigation.navigate("Post", this.props);
+    const { navigation, imageId } = this.props;
+    const { imageHeight } = this.state;
+    navigation.navigate("Post", {
+      imageHeight,
+      imageWidth: width,
+      imageURI: this.imageURI(imageId),
+      ...this.props
+    });
   };
+
+  imageURI = imageId => `https://picsum.photos/300?image=${imageId}`;
 
   render() {
     const { imageId, author } = this.props;
+    const { imageHeight } = this.state;
     return (
       <TouchableOpacity onPress={this.navigateHandler}>
         <View>
           <Image
-            source={{ uri: `https://picsum.photos/200/300?${imageId}` }}
+            source={{ uri: this.imageURI(imageId) }}
             style={styles.image}
+            height={imageHeight}
           />
           <Text style={styles.author}>{author}</Text>
         </View>

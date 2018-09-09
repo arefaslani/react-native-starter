@@ -22,6 +22,7 @@ class Feed extends React.Component {
       <FlatList
         keyExtractor={item => item.id.toString()}
         data={posts.slice(0, (page - 1) * per + per)}
+        style={{ paddingTop: 10 }}
         onEndReached={() => {
           this.setState({ page: page + 1 });
         }}

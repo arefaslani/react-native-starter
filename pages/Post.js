@@ -1,16 +1,12 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
-
-const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   image: {
     borderRadius: 10,
     marginLeft: 10,
     marginRight: 10,
-    width: width - 20,
-    height: height / 2,
     marginBottom: 10
   },
   author: {
@@ -21,12 +17,14 @@ const styles = StyleSheet.create({
 });
 
 const Post = props => {
-  const { imageId, author } = props;
+  const { author, imageHeight, imageWidth, imageURI } = props;
   return (
-    <View>
+    <View style={{ paddingTop: 10 }}>
       <Image
-        source={{ uri: `https://picsum.photos/200/300?${imageId}` }}
+        source={{ uri: imageURI }}
         style={styles.image}
+        width={imageWidth - 20}
+        height={imageHeight}
       />
       <Text style={styles.author}>{author}</Text>
     </View>
@@ -37,8 +35,10 @@ Post.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired
   }).isRequired,
-  imageId: PropTypes.number.isRequired,
-  author: PropTypes.string.isRequired
+  author: PropTypes.string.isRequired,
+  imageWidth: PropTypes.number.isRequired,
+  imageHeight: PropTypes.number.isRequired,
+  imageURI: PropTypes.string.isRequired
 };
 
 export default Post;
