@@ -6,7 +6,10 @@
         "transform-react-jsx-source",
         [
           "module-resolver", {
-            "root": ["./"]
+            "root": ["./"],
+            "alias": {
+              "components": "./components"
+            }
           }
         ]
       ]

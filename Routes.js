@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  createBottomTabNavigator,
-  createStackNavigator
-} from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 import Icon from "@expo/vector-icons/FontAwesome";
 
 import FeedPage from "pages/Feed";
@@ -55,7 +52,14 @@ const SettingsTabIcon = ({ tintColor }) => (
   <Icon name="sliders" size={25} color={tintColor} />
 );
 
-const Routes = createBottomTabNavigator({
+HomeTabIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired
+};
+SettingsTabIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired
+};
+
+export default {
   Feed: {
     screen: FeedStack,
     navigationOptions: {
@@ -70,13 +74,4 @@ const Routes = createBottomTabNavigator({
       tabBarIcon: SettingsTabIcon
     }
   }
-});
-
-HomeTabIcon.propTypes = {
-  tintColor: PropTypes.string.isRequired
 };
-SettingsTabIcon.propTypes = {
-  tintColor: PropTypes.string.isRequired
-};
-
-export default Routes;
