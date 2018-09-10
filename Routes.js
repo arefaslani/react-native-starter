@@ -6,6 +6,7 @@ import Icon from "@expo/vector-icons/FontAwesome";
 import FeedPage from "pages/Feed";
 import PostPage from "pages/Post";
 import SettingsPage from "pages/Settings";
+import ShoppingCartButton from "components/ShoppingCartButton";
 
 const mapNavigationStateParamsToProps = SomeComponent =>
   class extends Component {
@@ -21,29 +22,43 @@ const mapNavigationStateParamsToProps = SomeComponent =>
     }
   };
 
-const FeedStack = createStackNavigator({
-  Feed: {
-    screen: mapNavigationStateParamsToProps(FeedPage),
-    navigationOptions: {
-      title: "Home"
+const FeedStack = createStackNavigator(
+  {
+    Feed: {
+      screen: mapNavigationStateParamsToProps(FeedPage),
+      navigationOptions: {
+        title: "Home"
+      }
+    },
+    Post: {
+      screen: mapNavigationStateParamsToProps(PostPage),
+      navigationOptions: ({ navigation }) => ({
+        title: navigation.state.params.author
+      })
     }
   },
-  Post: {
-    screen: mapNavigationStateParamsToProps(PostPage),
-    navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.author
-    })
-  }
-});
-
-const SettingsStack = createStackNavigator({
-  Settings: {
-    screen: mapNavigationStateParamsToProps(SettingsPage),
+  {
     navigationOptions: {
-      title: "Settings"
+      headerRight: <ShoppingCartButton />
     }
   }
-});
+);
+
+const SettingsStack = createStackNavigator(
+  {
+    Settings: {
+      screen: mapNavigationStateParamsToProps(SettingsPage),
+      navigationOptions: {
+        title: "Settings"
+      }
+    }
+  },
+  {
+    navigationOptions: {
+      headerRight: <ShoppingCartButton />
+    }
+  }
+);
 
 const HomeTabIcon = ({ tintColor }) => (
   <Icon name="home" size={25} color={tintColor} />
