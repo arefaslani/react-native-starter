@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  SafeAreaView
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
+import { connect } from "react-redux";
+import IconBadge from "react-native-icon-badge";
+import PropTypes from "prop-types";
+
+import ShoppingCartModal from "components/ShoppingCartModal";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,39 +21,47 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class extends Component {
+class ShoppingCartButton extends Component {
   state = { modalVisible: false };
 
-  toggleShoppingBasket = () => {
+  toggleShoppingCart = () => {
     this.setState(prevState => ({
       modalVisible: !prevState.modalVisible
     }));
   };
 
   render() {
+    const { shoppingCart } = this.props;
     const { modalVisible } = this.state;
     return (
-      <TouchableOpacity onPress={this.toggleShoppingBasket}>
+      <TouchableOpacity onPress={this.toggleShoppingCart}>
         <View style={styles.container}>
-          <Icon name="ios-cart" size={30} />
+          <IconBadge
+            MainElement={<Icon name="ios-cart" size={30} />}
+            BadgeElement={
+              <Text style={{ color: "#fff" }}>{shoppingCart.length}</Text>
+            }
+            IconBadgeStyle={{
+              marginRight: 10,
+              marginTop: -10,
+              backgroundColor: "red"
+            }}
+            Hidden={shoppingCart.length === 0}
+          />
         </View>
-        <Modal
+        <ShoppingCartModal
           visible={modalVisible}
-          onRequestClose={() => {
-            console.log("Modal closed");
-          }}
-        >
-          <SafeAreaView>
-            <View style={styles.modalContainer}>
-              <View style={styles.modalHeader}>
-                <TouchableOpacity onPress={this.toggleShoppingBasket}>
-                  <Icon name="ios-close" size={30} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </SafeAreaView>
-        </Modal>
+          toggleShoppingCart={this.toggleShoppingCart}
+        />
       </TouchableOpacity>
     );
   }
 }
+
+ShoppingCartButton.propTypes = {
+  shoppingCart: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+};
+
+export default connect(state => ({ shoppingCart: state.shoppingCart }))(
+  ShoppingCartButton
+);

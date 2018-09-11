@@ -8,8 +8,11 @@ import {
   TouchableOpacity
 } from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import Swipeout from "react-native-swipeout";
+
+import { addToCart } from "store/actions/shoppingCart";
 
 const styles = StyleSheet.create({
   listItemContainer: {
@@ -34,7 +37,7 @@ class Category extends Component {
   };
 
   render() {
-    const { posts } = this.props;
+    const { posts, addToShoppingCart } = this.props;
     return (
       <View>
         <FlatList
@@ -54,7 +57,10 @@ class Category extends Component {
               right: [
                 {
                   text: "Add",
-                  backgroundColor: "#4caf50"
+                  backgroundColor: "#4caf50",
+                  onPress: () => {
+                    addToShoppingCart(item);
+                  }
                 }
               ]
             };
@@ -93,6 +99,20 @@ Category.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
-const mapStateToProps = state => ({ posts: state.posts });
+const mapStateToProps = state => ({
+  posts: state.posts,
+  shoppingCart: state.shoppingCart
+});
 
-export default connect(mapStateToProps)(Category);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addToShoppingCart: addToCart
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Category);
