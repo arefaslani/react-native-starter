@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Swipeout from "react-native-swipeout";
 
 const styles = StyleSheet.create({
   listItemContainer: {
@@ -39,23 +40,47 @@ class Category extends Component {
         <FlatList
           data={posts.slice(0, 20)}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => this.openProduct(item)}>
-              <View style={styles.listItemContainer}>
-                <Image
-                  source={{
-                    uri: `https://picsum.photos/50?image=${item.id}`,
-                    height: 50,
-                    width: 50
-                  }}
-                />
-                <View style={styles.listItemProps}>
-                  <Text>{item.author}</Text>
-                  <Text style={styles.priceTag}>$50,000</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
+          ref={el => {
+            this.flatlist = el;
+          }}
+          renderItem={({ item }) => {
+            const swipeSettings = {
+              autoClose: true,
+              scroll: scrollEnabled => {
+                this.flatlist.getScrollResponder().setNativeProps({
+                  scrollEnabled
+                });
+              },
+              right: [
+                {
+                  text: "Add",
+                  backgroundColor: "#4caf50"
+                }
+              ]
+            };
+            return (
+              <Swipeout {...swipeSettings}>
+                <TouchableOpacity
+                  onPress={() => this.openProduct(item)}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.listItemContainer}>
+                    <Image
+                      source={{
+                        uri: `https://picsum.photos/50?image=${item.id}`,
+                        height: 50,
+                        width: 50
+                      }}
+                    />
+                    <View style={styles.listItemProps}>
+                      <Text>{item.author}</Text>
+                      <Text style={styles.priceTag}>$50,000</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </Swipeout>
+            );
+          }}
         />
       </View>
     );
@@ -65,7 +90,7 @@ class Category extends Component {
 Category.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
-  posts: PropTypes.shape({}).isRequired
+  posts: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
 const mapStateToProps = state => ({ posts: state.posts });
