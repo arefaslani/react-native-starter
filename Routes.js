@@ -6,6 +6,9 @@ import Icon from "@expo/vector-icons/FontAwesome";
 import FeedPage from "pages/Feed";
 import PostPage from "pages/Post";
 import SettingsPage from "pages/Settings";
+import CategoriesPage from "pages/Categories";
+import CategoryPage from "pages/Category";
+import ProductPage from "pages/Product";
 import ShoppingCartButton from "components/ShoppingCartButton";
 
 const mapNavigationStateParamsToProps = SomeComponent =>
@@ -60,17 +63,51 @@ const SettingsStack = createStackNavigator(
   }
 );
 
+const CategoriesStack = createStackNavigator(
+  {
+    Categories: {
+      screen: mapNavigationStateParamsToProps(CategoriesPage),
+      navigationOptions: {
+        title: "Categories"
+      }
+    },
+    Category: {
+      screen: mapNavigationStateParamsToProps(CategoryPage),
+      navigationOptions: ({ navigation }) => ({
+        title: navigation.state.params.name
+      })
+    },
+    Product: {
+      screen: mapNavigationStateParamsToProps(ProductPage),
+      navigationOptions: ({ navigation }) => ({
+        title: navigation.state.params.title
+      })
+    }
+  },
+  {
+    navigationOptions: {
+      headerRight: <ShoppingCartButton />
+    }
+  }
+);
+
 const HomeTabIcon = ({ tintColor }) => (
   <Icon name="home" size={25} color={tintColor} />
 );
 const SettingsTabIcon = ({ tintColor }) => (
   <Icon name="sliders" size={25} color={tintColor} />
 );
+const CategoriesTabIcon = ({ tintColor }) => (
+  <Icon name="list" size={25} color={tintColor} />
+);
 
 HomeTabIcon.propTypes = {
   tintColor: PropTypes.string.isRequired
 };
 SettingsTabIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired
+};
+CategoriesTabIcon.propTypes = {
   tintColor: PropTypes.string.isRequired
 };
 
@@ -80,6 +117,13 @@ export default {
     navigationOptions: {
       title: "Home",
       tabBarIcon: HomeTabIcon
+    }
+  },
+  Categories: {
+    screen: CategoriesStack,
+    navigationOptions: {
+      title: "Categories",
+      tabBarIcon: CategoriesTabIcon
     }
   },
   Settings: {
