@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import Card from "components/Card";
 import { fetchPosts } from "store/actions/posts";
 
-class Feed extends React.Component {
+class Home extends React.Component {
   state = { page: 1, per: 10 };
 
   componentWillMount() {
@@ -32,7 +32,7 @@ class Feed extends React.Component {
   }
 }
 
-Feed.propTypes = {
+Home.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
   fetchAllPosts: PropTypes.func.isRequired,
@@ -52,4 +52,4 @@ const mapStateToProps = state => ({ posts: state.posts });
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Feed);
+)(Home);
