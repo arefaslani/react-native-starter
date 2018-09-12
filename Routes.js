@@ -4,7 +4,6 @@ import { createStackNavigator } from "react-navigation";
 import Icon from "@expo/vector-icons/FontAwesome";
 
 import FeedPage from "pages/Feed";
-import PostPage from "pages/Post";
 import SettingsPage from "pages/Settings";
 import CategoriesPage from "pages/Categories";
 import CategoryPage from "pages/Category";
@@ -33,8 +32,8 @@ const FeedStack = createStackNavigator(
         title: "Home"
       }
     },
-    Post: {
-      screen: mapNavigationStateParamsToProps(PostPage),
+    Product: {
+      screen: mapNavigationStateParamsToProps(ProductPage),
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.params.author
       })
@@ -80,7 +79,7 @@ const CategoriesStack = createStackNavigator(
     Product: {
       screen: mapNavigationStateParamsToProps(ProductPage),
       navigationOptions: ({ navigation }) => ({
-        title: navigation.state.params.title
+        title: navigation.state.params.author
       })
     }
   },

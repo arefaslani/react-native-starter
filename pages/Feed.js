@@ -26,13 +26,7 @@ class Feed extends React.Component {
         onEndReached={() => {
           this.setState({ page: page + 1 });
         }}
-        renderItem={({ item }) => (
-          <Card
-            imageId={item.id}
-            author={item.author}
-            navigation={navigation}
-          />
-        )}
+        renderItem={({ item }) => <Card {...item} navigation={navigation} />}
       />
     );
   }

@@ -30,8 +30,8 @@ export default class Card extends Component {
   state = { imageHeight: height / 2 };
 
   componentWillMount() {
-    const { imageId } = this.props;
-    const uri = this.imageURI(imageId);
+    const { id } = this.props;
+    const uri = this.imageURI(id);
     Image.getSize(uri, (w, h) => {
       const ratio = width / w;
       this.setState({ imageHeight: h * ratio });
@@ -39,26 +39,20 @@ export default class Card extends Component {
   }
 
   navigateHandler = () => {
-    const { navigation, imageId } = this.props;
-    const { imageHeight } = this.state;
-    navigation.navigate("Post", {
-      imageHeight,
-      imageWidth: width,
-      imageURI: this.imageURI(imageId),
-      ...this.props
-    });
+    const { navigation } = this.props;
+    navigation.navigate("Product", { ...this.props });
   };
 
-  imageURI = imageId => `https://picsum.photos/300?image=${imageId}`;
+  imageURI = id => `https://picsum.photos/300?image=${id}`;
 
   render() {
-    const { imageId, author } = this.props;
+    const { id, author } = this.props;
     const { imageHeight } = this.state;
     return (
       <TouchableOpacity onPress={this.navigateHandler}>
         <View>
           <Image
-            source={{ uri: this.imageURI(imageId) }}
+            source={{ uri: this.imageURI(id) }}
             style={styles.image}
             height={imageHeight}
           />
@@ -72,6 +66,6 @@ export default class Card extends Component {
 Card.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
-  imageId: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired
 };

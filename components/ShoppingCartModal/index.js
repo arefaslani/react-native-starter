@@ -47,7 +47,7 @@ const ShoppingCartButton = props => {
         <View style={styles.modalContainer}>
           <View style={styles.modalHeader}>
             <TouchableOpacity onPress={toggleShoppingCart}>
-              <Icon name="ios-close" size={30} />
+              <Icon name="ios-close" size={30} style={{ padding: 10 }} />
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>
