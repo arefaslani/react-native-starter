@@ -1,14 +1,22 @@
 import React from "react";
-import { FlatList } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Carousel, { Pagination } from "react-native-snap-carousel";
 
-import Card from "components/Card";
 import { fetchPosts } from "store/actions/posts";
 
+const { width } = Dimensions.get("window");
 class Home extends React.Component {
-  state = { page: 1, per: 10 };
+  state = { activeDotIndex: 0 };
 
   componentWillMount() {
     const { fetchAllPosts } = this.props;
@@ -16,18 +24,118 @@ class Home extends React.Component {
   }
 
   render() {
-    const { per, page } = this.state;
     const { navigation, posts } = this.props;
+    const { activeDotIndex } = this.state;
     return (
-      <FlatList
-        keyExtractor={item => item.id.toString()}
-        data={posts.slice(0, (page - 1) * per + per)}
-        style={{ paddingTop: 10 }}
-        onEndReached={() => {
-          this.setState({ page: page + 1 });
-        }}
-        renderItem={({ item }) => <Card {...item} navigation={navigation} />}
-      />
+      <ScrollView style={{ backgroundColor: "#fff" }}>
+        <View style={{ position: "relative" }}>
+          <Carousel
+            data={posts.slice(0, 5)}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigation.navigate("Product", { ...item })}
+                activeOpacity={0.7}
+              >
+                <Image
+                  source={{
+                    uri: `https://picsum.photos/200?image=${item.id}`
+                  }}
+                  style={{ width: "100%", height: 200 }}
+                />
+              </TouchableOpacity>
+            )}
+            sliderWidth={width}
+            itemWidth={width}
+            onSnapToItem={index => this.setState({ activeDotIndex: index })}
+          />
+          <Pagination
+            dotsLength={5}
+            activeDotIndex={activeDotIndex}
+            containerStyle={{
+              backgroundColor: "transparent",
+              height: 65,
+              width: "100%",
+              position: "absolute",
+              bottom: -10
+            }}
+            dotStyle={{
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              marginHorizontal: 4,
+              backgroundColor: "#999",
+              borderColor: "#fff",
+              borderWidth: 2
+            }}
+            inactiveDotStyle={
+              {
+                // Define styles for inactive dots here
+              }
+            }
+            inactiveDotOpacity={0.4}
+            inactiveDotScale={0.4}
+          />
+        </View>
+        <Text
+          style={{
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            fontWeight: "bold",
+            marginTop: 10
+          }}
+        >
+          Promotions
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {posts.slice(5, 13).map((item, index) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => navigation.navigate("Product", { ...item })}
+              activeOpacity={0.7}
+            >
+              <View
+                style={{ marginRight: index === 7 ? 0 : 10, width: width / 4 }}
+              >
+                <Image
+                  source={{ uri: `https://picsum.photos/300?image=${item.id}` }}
+                  style={{ width: "100%", height: width / 4 }}
+                />
+                <Text style={{ margin: 5 }}>{item.author}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        <Text
+          style={{
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            fontWeight: "bold",
+            marginTop: 10
+          }}
+        >
+          Best Sellers
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {posts.slice(13, 21).map((item, index) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => navigation.navigate("Product", { ...item })}
+              activeOpacity={0.7}
+            >
+              <View
+                style={{ marginRight: index === 7 ? 0 : 10, width: width / 2 }}
+              >
+                <Image
+                  source={{ uri: `https://picsum.photos/300?image=${item.id}` }}
+                  style={{ width: "100%", height: width / 2 }}
+                />
+                <Text style={{ margin: 5 }}>{item.author}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
