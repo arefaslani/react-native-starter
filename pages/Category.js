@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
 });
 
 class Category extends Component {
+  state = { page: 1, per: 10 };
+
   openProduct = item => {
     const { navigation } = this.props;
     navigation.navigate("Product", { ...this.props, ...item });
@@ -38,13 +40,17 @@ class Category extends Component {
 
   render() {
     const { posts, addToShoppingCart } = this.props;
+    const { per, page } = this.state;
     return (
       <View>
         <FlatList
-          data={posts.slice(0, 20)}
+          data={posts.slice(0, (page - 1) * per + per)}
           keyExtractor={item => item.id.toString()}
           ref={el => {
             this.flatlist = el;
+          }}
+          onEndReached={() => {
+            this.setState({ page: page + 1 });
           }}
           renderItem={({ item }) => {
             const swipeSettings = {
