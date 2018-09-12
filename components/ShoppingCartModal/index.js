@@ -40,7 +40,7 @@ const ShoppingCartButton = props => {
     <Modal
       visible={visible}
       onRequestClose={() => {
-        console.log("Modal closed");
+        toggleShoppingCart();
       }}
     >
       <SafeAreaView>

@@ -3,10 +3,7 @@ import PropTypes from "prop-types";
 
 import Card from "components/Card";
 
-const Product = props => {
-  console.log(props);
-  return <Card {...props} />;
-};
+const Product = props => <Card {...props} />;
 
 Product.propTypes = {
   navigation: PropTypes.shape({

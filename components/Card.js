@@ -8,16 +8,19 @@ import {
   Dimensions,
   TouchableOpacity
 } from "react-native";
+import Icon from "@expo/vector-icons/FontAwesome";
+
+import play from "utilities/playSound";
 
 const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
+    margin: 10
+  },
   image: {
-    borderRadius: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    width: width - 20,
-    marginBottom: 10
+    width: width - 20
   },
   author: {
     marginBottom: 10,
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
 });
 
 export default class Card extends Component {
-  state = { imageHeight: height / 2 };
+  state = { imageHeight: height / 2, liked: false };
 
   componentWillMount() {
     const { id } = this.props;
@@ -43,22 +46,39 @@ export default class Card extends Component {
     navigation.navigate("Product", { ...this.props });
   };
 
+  toggleLikeButton = () => {
+    const { liked } = this.state;
+    if (liked) {
+      play("dislike");
+    } else {
+      play("like");
+    }
+    this.setState({ liked: !liked });
+  };
+
   imageURI = id => `https://picsum.photos/300?image=${id}`;
 
   render() {
     const { id, author } = this.props;
-    const { imageHeight } = this.state;
+    const { imageHeight, liked } = this.state;
     return (
-      <TouchableOpacity onPress={this.navigateHandler}>
-        <View>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={this.navigateHandler} activeOpacity={0.7}>
           <Image
             source={{ uri: this.imageURI(id) }}
             style={styles.image}
             height={imageHeight}
           />
-          <Text style={styles.author}>{author}</Text>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+        <Icon
+          name={liked ? "heart" : "heart-o"}
+          size={30}
+          color="#eb4b59"
+          style={{ margin: 10 }}
+          onPress={this.toggleLikeButton}
+        />
+        <Text style={styles.author}>{author}</Text>
+      </View>
     );
   }
 }
