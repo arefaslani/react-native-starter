@@ -20,13 +20,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
-    flexDirection: "row"
+    flexDirection: "row-reverse"
   },
   priceTag: {
     color: "#aaa"
   },
   listItemProps: {
-    marginLeft: 10
+    marginRight: 10,
+    alignItems: "flex-end",
+    justifyContent: "space-around"
   }
 });
 

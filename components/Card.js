@@ -17,7 +17,8 @@ const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    margin: 10
+    margin: 10,
+    alignItems: "flex-end"
   },
   image: {
     width: width - 20
@@ -25,7 +26,8 @@ const styles = StyleSheet.create({
   author: {
     marginBottom: 10,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    fontFamily: "iranyekan-light"
   }
 });
 

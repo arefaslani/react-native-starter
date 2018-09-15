@@ -77,64 +77,84 @@ class Home extends React.Component {
             inactiveDotScale={0.4}
           />
         </View>
-        <Text
-          style={{
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            fontWeight: "bold",
-            marginTop: 10
-          }}
-        >
-          Promotions
-        </Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {posts.slice(5, 13).map((item, index) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => navigation.navigate("Product", { ...item })}
-              activeOpacity={0.7}
-            >
-              <View
-                style={{ marginRight: index === 7 ? 0 : 10, width: width / 4 }}
+        <View style={{ alignItems: "flex-end" }}>
+          <Text
+            style={{
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              marginTop: 10,
+              fontWeight: "200",
+              fontFamily: "iranyekan-bold"
+            }}
+          >
+            محصولات شگفت انگیز
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {posts.slice(5, 13).map((item, index) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigation.navigate("Product", { ...item })}
+                activeOpacity={0.7}
               >
-                <Image
-                  source={{ uri: `https://picsum.photos/300?image=${item.id}` }}
-                  style={{ width: "100%", height: width / 4 }}
-                />
-                <Text style={{ margin: 5 }}>{item.author}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-        <Text
-          style={{
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            fontWeight: "bold",
-            marginTop: 10
-          }}
-        >
-          Best Sellers
-        </Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {posts.slice(13, 21).map((item, index) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => navigation.navigate("Product", { ...item })}
-              activeOpacity={0.7}
-            >
-              <View
-                style={{ marginRight: index === 7 ? 0 : 10, width: width / 2 }}
+                <View
+                  style={{
+                    marginRight: index === 7 ? 0 : 10,
+                    width: width / 4
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri: `https://picsum.photos/300?image=${item.id}`
+                    }}
+                    style={{ width: "100%", height: width / 4 }}
+                  />
+                  <Text style={{ marginTop: 5, textAlign: "center" }}>
+                    {item.author}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <Text
+            style={{
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              fontWeight: "200",
+              fontFamily: "iranyekan-bold",
+              marginTop: 10
+            }}
+          >
+            محصولات پرفروش
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {posts.slice(13, 21).map((item, index) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigation.navigate("Product", { ...item })}
+                activeOpacity={0.7}
               >
-                <Image
-                  source={{ uri: `https://picsum.photos/300?image=${item.id}` }}
-                  style={{ width: "100%", height: width / 2 }}
-                />
-                <Text style={{ margin: 5 }}>{item.author}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+                <View
+                  style={{
+                    marginRight: index === 7 ? 0 : 10,
+                    width: width / 2
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri: `https://picsum.photos/300?image=${item.id}`
+                    }}
+                    style={{ width: "100%", height: width / 2 }}
+                  />
+                  <Text
+                    style={{ marginTop: 5, marginRight: 2, textAlign: "right" }}
+                  >
+                    {item.author}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
       </ScrollView>
     );
   }

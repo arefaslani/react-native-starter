@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Text } from "react-native";
 import PropTypes from "prop-types";
 import { createStackNavigator } from "react-navigation";
 import Icon from "@expo/vector-icons/FontAwesome";
@@ -29,7 +30,7 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: mapNavigationStateParamsToProps(HomePage),
       navigationOptions: {
-        title: "Home"
+        title: "خانه"
       }
     },
     Product: {
@@ -41,7 +42,11 @@ const HomeStack = createStackNavigator(
   },
   {
     navigationOptions: {
-      headerRight: <ShoppingCartButton />
+      headerRight: <ShoppingCartButton />,
+      headerTitleStyle: {
+        fontFamily: "iranyekan-bold",
+        fontWeight: "200"
+      }
     }
   }
 );
@@ -51,13 +56,17 @@ const SettingsStack = createStackNavigator(
     Settings: {
       screen: mapNavigationStateParamsToProps(SettingsPage),
       navigationOptions: {
-        title: "Settings"
+        title: "تنظیمات"
       }
     }
   },
   {
     navigationOptions: {
-      headerRight: <ShoppingCartButton />
+      headerRight: <ShoppingCartButton />,
+      headerTitleStyle: {
+        fontFamily: "iranyekan-bold",
+        fontWeight: "200"
+      }
     }
   }
 );
@@ -67,7 +76,7 @@ const CategoriesStack = createStackNavigator(
     Categories: {
       screen: mapNavigationStateParamsToProps(CategoriesPage),
       navigationOptions: {
-        title: "Categories"
+        title: "دسته بندی"
       }
     },
     Category: {
@@ -85,7 +94,11 @@ const CategoriesStack = createStackNavigator(
   },
   {
     navigationOptions: {
-      headerRight: <ShoppingCartButton />
+      headerRight: <ShoppingCartButton />,
+      headerTitleStyle: {
+        fontFamily: "iranyekan-bold",
+        fontWeight: "200"
+      }
     }
   }
 );
@@ -114,21 +127,31 @@ export default {
   Home: {
     screen: HomeStack,
     navigationOptions: {
-      title: "Home",
+      tabBarLabel: (
+        <Text style={{ fontFamily: "iranyekan-bold", fontSize: 10 }}>خانه</Text>
+      ),
       tabBarIcon: HomeTabIcon
     }
   },
   Categories: {
     screen: CategoriesStack,
     navigationOptions: {
-      title: "Categories",
+      tabBarLabel: (
+        <Text style={{ fontFamily: "iranyekan-bold", fontSize: 10 }}>
+          دسته بندی
+        </Text>
+      ),
       tabBarIcon: CategoriesTabIcon
     }
   },
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
-      title: "Settings",
+      tabBarLabel: (
+        <Text style={{ fontFamily: "iranyekan-bold", fontSize: 10 }}>
+          تنظیمات
+        </Text>
+      ),
       tabBarIcon: SettingsTabIcon
     }
   }

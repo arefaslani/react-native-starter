@@ -44,8 +44,8 @@ class Categories extends Component {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => this.selectCategory(item)}>
               <View style={styles.listItem}>
+                <Icon name="ios-arrow-back" size={20} color="#397cf2" />
                 <Text style={styles.listItemText}>{item.name}</Text>
-                <Icon name="ios-arrow-forward" size={20} color="#397cf2" />
               </View>
             </TouchableOpacity>
           )}
