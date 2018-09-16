@@ -8,8 +8,12 @@ import {
   Dimensions,
   TouchableOpacity
 } from "react-native";
-import Icon from "@expo/vector-icons/FontAwesome";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { findIndex } from "lodash";
 
+import { addToCart, removeFromCart } from "store/actions/shoppingCart";
 import play from "utilities/playSound";
 
 const { width, height } = Dimensions.get("window");
@@ -31,8 +35,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Card extends Component {
-  state = { imageHeight: height / 2, liked: false };
+class Card extends Component {
+  constructor(props) {
+    const { id, shoppingCart } = props;
+    const itemIndex = findIndex(shoppingCart, o => o.id === id);
+    super();
+    if (itemIndex >= 0) {
+      this.state = { added: true };
+    }
+  }
+
+  state = { imageHeight: height / 2, added: false };
 
   componentWillMount() {
     const { id } = this.props;
@@ -48,21 +61,24 @@ export default class Card extends Component {
     navigation.navigate("Product", { ...this.props });
   };
 
-  toggleLikeButton = () => {
-    const { liked } = this.state;
-    if (liked) {
+  toggleCart = () => {
+    const { added } = this.state;
+    const { addToShoppingCart, removeFromShoppingCart } = this.props;
+    if (added) {
+      removeFromShoppingCart({ ...this.props });
       play("dislike");
     } else {
+      addToShoppingCart({ ...this.props });
       play("like");
     }
-    this.setState({ liked: !liked });
+    this.setState({ added: !added });
   };
 
   imageURI = id => `https://picsum.photos/300?image=${id}`;
 
   render() {
     const { id, author } = this.props;
-    const { imageHeight, liked } = this.state;
+    const { imageHeight, added } = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.navigateHandler} activeOpacity={0.7}>
@@ -73,11 +89,11 @@ export default class Card extends Component {
           />
         </TouchableOpacity>
         <Icon
-          name={liked ? "heart" : "heart-o"}
+          name={added ? "cart-off" : "cart-plus"}
           size={30}
-          color="#eb4b59"
+          color={added ? "#eb4b59" : "green"}
           style={{ margin: 10 }}
-          onPress={this.toggleLikeButton}
+          onPress={this.toggleCart}
         />
         <Text style={styles.author}>{author}</Text>
       </View>
@@ -89,5 +105,26 @@ Card.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
   id: PropTypes.number.isRequired,
-  author: PropTypes.string.isRequired
+  author: PropTypes.string.isRequired,
+  addToShoppingCart: PropTypes.func.isRequired,
+  removeFromShoppingCart: PropTypes.func.isRequired,
+  shoppingCart: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
+
+const mapStateToProps = state => ({
+  shoppingCart: state.shoppingCart
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addToShoppingCart: addToCart,
+      removeFromShoppingCart: removeFromCart
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Card);

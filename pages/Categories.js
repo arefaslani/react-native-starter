@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   listItemText: {
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: "iranyekan-light"
   }
 });
 
@@ -35,10 +36,10 @@ class Categories extends Component {
       <View>
         <FlatList
           data={[
-            { id: 1, name: "Books" },
-            { id: 2, name: "Toys" },
-            { id: 3, name: "Vehicles" },
-            { id: 4, name: "Handmade" }
+            { id: 1, name: "کتاب" },
+            { id: 2, name: "اسباب بازی" },
+            { id: 3, name: "خودرو و وسایل نقلیه" },
+            { id: 4, name: "ورزش" }
           ]}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (

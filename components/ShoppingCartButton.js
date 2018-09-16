@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import Icon from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import IconBadge from "react-native-icon-badge";
 import PropTypes from "prop-types";
@@ -37,7 +37,7 @@ class ShoppingCartButton extends Component {
       <TouchableOpacity onPress={this.toggleShoppingCart}>
         <View style={styles.container}>
           <IconBadge
-            MainElement={<Icon name="ios-cart" size={30} />}
+            MainElement={<Icon name="cart" size={25} />}
             BadgeElement={
               <Text style={{ color: "#fff" }}>{shoppingCart.length}</Text>
             }

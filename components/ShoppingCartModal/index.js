@@ -11,6 +11,9 @@ import {
 import Icon from "@expo/vector-icons/Ionicons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+
+import { removeFromCart } from "store/actions/shoppingCart";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,12 +32,20 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     borderBottomColor: "#eee",
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 
 const ShoppingCartButton = props => {
-  const { visible, toggleShoppingCart, shoppingCartData } = props;
+  const {
+    visible,
+    toggleShoppingCart,
+    shoppingCartData,
+    removeFromShoppingCart
+  } = props;
 
   return (
     <Modal
@@ -51,15 +62,35 @@ const ShoppingCartButton = props => {
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>
-            <FlatList
-              data={shoppingCartData}
-              keyExtractor={item => item.id.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.shoppingCartItem}>
-                  <Text>{item.author}</Text>
-                </View>
-              )}
-            />
+            {shoppingCartData.length === 0 ? (
+              <View style={{ alignItems: "center" }}>
+                <Icon name="md-sad" size={30} />
+                <Text style={{ fontFamily: "iranyekan-bold" }}>
+                  سبد خرید خالی است
+                </Text>
+              </View>
+            ) : (
+              <FlatList
+                data={shoppingCartData}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.shoppingCartItem}>
+                    <View>
+                      <Text style={{ textAlign: "right" }}>{item.author}</Text>
+                      <Text style={{ textAlign: "right", color: "#aaa" }}>
+                        $5000
+                      </Text>
+                    </View>
+                    <Icon
+                      name="ios-remove-circle"
+                      size={30}
+                      color="red"
+                      onPress={() => removeFromShoppingCart(item)}
+                    />
+                  </View>
+                )}
+              />
+            )}
           </View>
         </View>
       </SafeAreaView>
@@ -70,9 +101,20 @@ const ShoppingCartButton = props => {
 ShoppingCartButton.propTypes = {
   shoppingCartData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   visible: PropTypes.bool.isRequired,
-  toggleShoppingCart: PropTypes.func.isRequired
+  toggleShoppingCart: PropTypes.func.isRequired,
+  removeFromShoppingCart: PropTypes.func.isRequired
 };
 
-export default connect(state => ({ shoppingCartData: state.shoppingCart }))(
-  ShoppingCartButton
-);
+const mapStateToProps = state => ({ shoppingCartData: state.shoppingCart });
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      removeFromShoppingCart: removeFromCart
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShoppingCartButton);
