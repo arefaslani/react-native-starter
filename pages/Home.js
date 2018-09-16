@@ -12,25 +12,25 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 
-import { fetchPosts } from "store/actions/posts";
+import { fetchProducts } from "store/actions/products";
 
 const { width } = Dimensions.get("window");
 class Home extends React.Component {
   state = { activeDotIndex: 0 };
 
   componentWillMount() {
-    const { fetchAllPosts } = this.props;
-    fetchAllPosts();
+    const { fetchAllProducts } = this.props;
+    fetchAllProducts();
   }
 
   render() {
-    const { navigation, posts } = this.props;
+    const { navigation, products } = this.props;
     const { activeDotIndex } = this.state;
     return (
       <ScrollView style={{ backgroundColor: "#fff" }}>
         <View style={{ position: "relative" }}>
           <Carousel
-            data={posts.slice(0, 5)}
+            data={products.slice(0, 5)}
             renderItem={({ item }) => (
               <TouchableOpacity
                 key={item.id}
@@ -90,7 +90,7 @@ class Home extends React.Component {
             محصولات شگفت انگیز
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {posts.slice(5, 13).map((item, index) => (
+            {products.slice(5, 13).map((item, index) => (
               <TouchableOpacity
                 key={item.id}
                 onPress={() => navigation.navigate("Product", { ...item })}
@@ -127,7 +127,7 @@ class Home extends React.Component {
             محصولات پرفروش
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {posts.slice(13, 21).map((item, index) => (
+            {products.slice(13, 21).map((item, index) => (
               <TouchableOpacity
                 key={item.id}
                 onPress={() => navigation.navigate("Product", { ...item })}
@@ -163,19 +163,19 @@ class Home extends React.Component {
 Home.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
-  fetchAllPosts: PropTypes.func.isRequired,
-  posts: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  fetchAllProducts: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchAllPosts: fetchPosts
+      fetchAllProducts: fetchProducts
     },
     dispatch
   );
 
-const mapStateToProps = state => ({ posts: state.posts });
+const mapStateToProps = state => ({ products: state.products });
 
 export default connect(
   mapStateToProps,

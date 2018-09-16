@@ -37,12 +37,12 @@ class Category extends Component {
   };
 
   render() {
-    const { posts } = this.props;
+    const { products } = this.props;
     const { per, page } = this.state;
     return (
       <View>
         <FlatList
-          data={posts.slice(0, (page - 1) * per + per)}
+          data={products.slice(0, (page - 1) * per + per)}
           keyExtractor={item => item.id.toString()}
           ref={el => {
             this.flatlist = el;
@@ -79,9 +79,9 @@ class Category extends Component {
 Category.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired })
     .isRequired,
-  posts: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  products: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
 export default connect(state => ({
-  posts: state.posts
+  products: state.products
 }))(Category);

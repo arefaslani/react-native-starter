@@ -14,7 +14,7 @@ facade.request = config => api.request(config);
 });
 
 class API {
-  static fetchAllPosts() {
+  static fetchAllProducts() {
     return facade.get("/list");
   }
 }

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 
-import postsReducer from "store/reducers/posts";
+import productsReducer from "store/reducers/products";
 import shoppingCartReducer from "store/reducers/shoppingCart";
 
 const reducers = {
-  posts: postsReducer,
+  products: productsReducer,
   shoppingCart: shoppingCartReducer
 };
 
