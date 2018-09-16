@@ -5,7 +5,7 @@ import { createStackNavigator } from "react-navigation";
 import Icon from "@expo/vector-icons/FontAwesome";
 
 import HomePage from "pages/Home";
-import SettingsPage from "pages/Settings";
+import ProfilePage from "pages/Profile";
 import CategoriesPage from "pages/Categories";
 import CategoryPage from "pages/Category";
 import ProductPage from "pages/Product";
@@ -51,12 +51,12 @@ const HomeStack = createStackNavigator(
   }
 );
 
-const SettingsStack = createStackNavigator(
+const ProfileStack = createStackNavigator(
   {
-    Settings: {
-      screen: mapNavigationStateParamsToProps(SettingsPage),
+    Profile: {
+      screen: mapNavigationStateParamsToProps(ProfilePage),
       navigationOptions: {
-        title: "تنظیمات"
+        title: "پروفایل"
       }
     }
   },
@@ -106,8 +106,8 @@ const CategoriesStack = createStackNavigator(
 const HomeTabIcon = ({ tintColor }) => (
   <Icon name="home" size={25} color={tintColor} />
 );
-const SettingsTabIcon = ({ tintColor }) => (
-  <Icon name="sliders" size={25} color={tintColor} />
+const ProfileTabIcon = ({ tintColor }) => (
+  <Icon name="user-circle-o" size={25} color={tintColor} />
 );
 const CategoriesTabIcon = ({ tintColor }) => (
   <Icon name="list" size={25} color={tintColor} />
@@ -116,7 +116,7 @@ const CategoriesTabIcon = ({ tintColor }) => (
 HomeTabIcon.propTypes = {
   tintColor: PropTypes.string.isRequired
 };
-SettingsTabIcon.propTypes = {
+ProfileTabIcon.propTypes = {
   tintColor: PropTypes.string.isRequired
 };
 CategoriesTabIcon.propTypes = {
@@ -144,15 +144,15 @@ export default {
       tabBarIcon: CategoriesTabIcon
     }
   },
-  Settings: {
-    screen: SettingsStack,
+  Profile: {
+    screen: ProfileStack,
     navigationOptions: {
       tabBarLabel: (
         <Text style={{ fontFamily: "iranyekan-bold", fontSize: 10 }}>
-          تنظیمات
+          پروفایل
         </Text>
       ),
-      tabBarIcon: SettingsTabIcon
+      tabBarIcon: ProfileTabIcon
     }
   }
 };
